@@ -12,6 +12,7 @@
   * cudnn: 7.4.2
   * nccl: 2.4.2
   * python ：2.7  
+  * bazel: 0.19.2
  ```diff
 + 源码编译安装TensorFlow版本需要对应，不然可能会出现不可预期的错误！
 ``` 
@@ -72,22 +73,41 @@ Result = PASS
 ```
 
 ## 安装cuDNN
-  * 8 servers: n1\~8; 4 ToR switches: t1\~4; 2 aggregation switches: a1\~2; 1 core switch: c1
-  * The network is partitioned into two clusters
-  * The links connecting to c1 are PPP, or the other networks are Ethernets, the networks’ capacities are shown on the topology graph.
-  * All the end-end delays on the networks are 500ns.
-  * IP address assignment is shown on the topology.
-  * All the switches behaves like OSPF routers.
++ 到[官网](https://developer.nvidia.com/rdp/cudnn-download "cudnn")下载对应版本的cuDNN，我下载的是[cudnn-10.0-linux-x64-v7.4.2.24](https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v7.4.2/prod/10.0_20181213/cudnn-10.0-linux-x64-v7.4.2.24.tgz)版
+### 执行以下命令
+  * tar -xzvf cudnn-10.0-linux-x64-v7.4.2.24.tgz
+  * sudo cp cuda/include/cudnn.h /usr/local/cuda/include
+  * sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+  * sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+### 查看是否安装成功
+  * nvcc -V
   
-## Traffic patterns
- * Pattern 1: inter-cluster traffic
-   * Each server communicates using TCP with another server that comes from different cluster
-     * For example, 1-5, 6-2, 3-7, 8-4
- * Pattern 2: many-to-one traffic
-   * Select one server as the sink, and all the other servers communicate to it
- * Simulate the two patterns separately, obtain the throughput that the network can achieve, and find out the network bottleneck, how to improve the network.
+## nccl : 2.4.2
+ * [下载链接](https://developer.nvidia.com/nccl/nccl-download#a-collapse242-100)
+ * sudo dpkg -i nccl-repo-ubuntu1804-2.4.2-ga-cuda10.0_1-1_amd64.deb
+ * sudo apt update
+ * sudo apt install libnccl2 libnccl-dev
+ * 如果希望保留较旧版本的CUDA，请指定特定版本，例如：
+  * sudo apt-get install libnccl2=2.4.2-1+cuda10.0 libnccl-dev=2.4.2-1+cuda10.0
+  
+## bazel: 0.19.2
+ * [下载链接](https://github.com/bazelbuild/bazel/releases/download/0.19.2/bazel-0.19.2-installer-linux-x86_64.sh)
+ * chmod +xxx bazel-0.19.2-installer-linux-x86_64.sh
+ * ./bazel-0.19.2-installer-linux-x86_64.sh --user
  
- ```diff
-+ 鸟宿池边树，僧敲月下门
-- 鸟宿池边树，僧推月下门
+## python2.7.16: miniconda2
+ * 首先安装miniconda2，可以自己搜索安装方法，在该创建虚拟下使用bazel编译安装TensorFlow
+ * conda create -n python2 python=2.7 -y
+ * source activate python2
+ 
+## 编译命令：仅供参考
 ```
+bazel build --config=opt --config=cuda --local_resources 4096,4,1.0 --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
+```
+使用上述命令，可能CPU或内存资源不够，导致卡死，出现错误：
+
+```
+bazel build --config=opt --config=cuda --local_resources 4096,4,1.0 -j --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
+```
+
+# 祝君好运！！！
