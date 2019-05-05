@@ -105,9 +105,16 @@ Result = PASS
 bazel build --config=opt --config=cuda --local_resources 4096,4,1.0 --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
 ```
 使用上述命令，可能CPU或内存资源不够，导致卡死，出现错误：
-
+```
+/tensorflow/core/kernels/BUILD:762:1: C++ compilation of rule '//tensorflow/core/kernels:broadcast_to_op' failed (Exit 4)
+```
+可以使用下面命令，但是编译速度相比前面慢许多。
 ```
 bazel build --config=opt --config=cuda --local_resources 4096,4.0,1.0 -j 1 --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
 ```
+
+## 卸载
+ * sudo apt-get remove --purge nvidia-* 　　　　#卸载驱动
+ * sudo pip3 uninstall tensorflow
 
 # 祝君好运！！！
