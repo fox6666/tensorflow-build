@@ -107,7 +107,7 @@ bazel build --config=opt --config=cuda --local_resources 4096,4,1.0 --cxxopt="-D
 使用上述命令，可能CPU或内存资源不够，导致卡死，出现错误：
 
 ```
-bazel build --config=opt --config=cuda --local_resources 4096,4,1.0 -j --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
+bazel build --config=opt --config=cuda --local_resources 4096,4.0,1.0 -j 1 --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
 ```
 
 # 祝君好运！！！
