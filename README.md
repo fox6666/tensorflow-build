@@ -98,7 +98,11 @@ Result = PASS
 ## python2.7.16: miniconda2
  * 首先安装miniconda2，可以自己搜索安装方法，在该创建虚拟下使用bazel编译安装TensorFlow
  * conda create -n python2 python=2.7 -y
+ * conda activate
  * source activate python2
+ 退出：
+ * conda deactivate
+ * source deactivate
  
 ## 编译命令：仅供参考
 ```
@@ -120,6 +124,18 @@ AttributeError: attribute '__doc__' of 'type' objects is not writable  Target //
 ```
 * 若有安装卸载之前的enum：pip uninstall enum
 * 执行命令： pip install enum34
+
+
+## 测试安装成功
+* import tensorflow as tf
+* print('Loaded TF version', tf.__version__)
+* hello = tf.constant('Hello, TensorFlow!')
+* \# 通过log_device_placement参数来输出运行每一个运算的设备。
+* sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+* print(sess.run(hello))
+**输出：** 
+* Loaded TF version 1.2.1
+* Hello, TensorFlow!
 
 
 ## 卸载
