@@ -118,6 +118,8 @@ bazel build --config=opt --config=cuda --local_resources 4096,4.0,1.0 -j 1 --cxx
 /tensorflow/BUILD:573:1: Executing genrule //tensorflow:tf_python_api_gen_v1 failed (Exit 1)...
 AttributeError: attribute '__doc__' of 'type' objects is not writable  Target //tensorflow/tools/pip_package:build_pip_package failed to build
 ```
+* 若有安装卸载之前的enum：pip uninstall enum
+* 执行命令： pip install enum34
 
 
 ## 卸载
