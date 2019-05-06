@@ -132,7 +132,7 @@ AttributeError: attribute '__doc__' of 'type' objects is not writable  Target //
 * hello = tf.constant('Hello, TensorFlow!')
 * \# 通过log_device_placement参数来输出运行每一个运算的设备。
 * sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
-* print(sess.run(hello))
+* print(sess.run(hello))  
 **输出：** 
 * Loaded TF version 1.2.1
 * Hello, TensorFlow!
@@ -141,5 +141,8 @@ AttributeError: attribute '__doc__' of 'type' objects is not writable  Target //
 ## 卸载
  * sudo apt-get remove --purge nvidia-* 　　　　#卸载驱动
  * sudo pip3 uninstall tensorflow
+ 
+[官方编译安装教程](https://www.tensorflow.org/install/source)  
+
 
 # 祝君好运！！！
