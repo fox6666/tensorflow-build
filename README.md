@@ -113,6 +113,13 @@ bazel build --config=opt --config=cuda --local_resources 4096,4,1.0 --cxxopt="-D
 bazel build --config=opt --config=cuda --local_resources 4096,4.0,1.0 -j 1 --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
 ```
 
+## 遇到问题
+```
+/tensorflow/BUILD:573:1: Executing genrule //tensorflow:tf_python_api_gen_v1 failed (Exit 1)...
+AttributeError: attribute '__doc__' of 'type' objects is not writable  Target //tensorflow/tools/pip_package:build_pip_package failed to build
+```
+
+
 ## 卸载
  * sudo apt-get remove --purge nvidia-* 　　　　#卸载驱动
  * sudo pip3 uninstall tensorflow
